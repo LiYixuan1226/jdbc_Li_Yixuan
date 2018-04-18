@@ -1,0 +1,127 @@
+Sample Data
+------------------------------------------------------------------------------
+
+create table Member(
+    MembershipNumber int,
+    Status varchar(30),
+    ContactInformation varchar(30),
+    memberName varchar(30),
+    constraint pk_MembershipNumber primary key(MembershipNumber)
+);
+
+create table Facility(
+    Type varchar(30),
+    HourlyCost numeric(10,2),
+    constraint pk_Type primary key(Type)
+);
+
+create table Instructor(
+    InstructorNumber integer,
+    InstructorName varchar(30), 
+    Email varchar(30),
+    constraint pk_InstructorNumber primary key(InstructorNumber)
+);
+
+create table Course(
+    ID integer, 
+    Cost numeric(10,2), 
+    MaxPlaces integer,
+    TimeSlot integer, 
+    Name varchar(30), 
+    InstructorNumber integer,
+    constraint pk_ID primary key(ID),
+    constraint fk_InstructorNumber foreign key (InstructorNumber)
+    references Instructor(InstructorNumber)
+);
+
+create table InstructorQualifications(
+    InstructorNumber integer, 
+    Qualification varchar(30),
+    constraint fk_InstructorNumber foreign key (InstructorNumber)
+    references Instructor(InstructorNumber)
+);
+
+create table MemberCourse(
+    MembershipNumber integer,
+    ID integer, 
+    BookingNumber integer,
+    constraint fk_MembershipNumber foreign key (MembershipNumber)
+    references Member(MembershipNumber)
+);
+
+create table MemberFacility(
+    MembershipNumber integer, 
+    Type varchar(30), 
+    Time integer, 
+    Activity varchar(30),
+    constraint fk_MembershipNumber foreign key (MembershipNumber)
+    references Member(MembershipNumber),
+    constraint fk_Facility foreign key (Type)
+    references Facility(Type)
+);
+---------------------------------------------------------------------
+
+--insert sample data
+--Member 
+INSERT INTO Member( , Status, ContactInformation, memberName)
+VALUES (879, 'student' , '1111', 'Ruby Monro');
+INSERT INTO Member(MembershipNumber, Status, ContactInformation, memberName)
+VALUES (786, 'staff' , '2222', 'Steven Marks');
+INSERT INTO Member(MembershipNumber, Status, ContactInformation, memberName)
+VALUES (111, 'student' , '3333', 'Amy Adams');
+INSERT INTO Member(MembershipNumber, Status, ContactInformation, memberName)
+VALUES (222, 'staff' , '4444', 'Bob Baker');
+INSERT INTO Member(MembershipNumber, Status, ContactInformation, memberName)
+VALUES (333, 'student' , '5555', 'Casy Cook');
+INSERT INTO Member(MembershipNumber, Status, ContactInformation, memberName)
+VALUES (444, 'student' , '66666', 'Bob Baker');
+
+
+--Instructor
+INSERT INTO Instructor(InstructorNumber, InstructorName, Email)
+VALUES (56, 'Alice Pensive', '56@gla.edu');
+INSERT INTO Instructor(InstructorNumber, InstructorName, Email)
+VALUES (40, 'David Davis', '40@gla.edu');
+INSERT INTO Instructor(InstructorNumber, InstructorName, Email)
+VALUES (28, 'Flora Fox', '28@gla.edu');
+
+--Facility
+INSERT INTO Facility(Type, HourlyCost)
+VALUES ('Pilates Room', 50);
+INSERT INTO Facility(Type, HourlyCost)
+VALUES ('Spinning Room', 40);
+INSERT INTO Facility(Type, HourlyCost)
+VALUES ('Swimming Room', 60);
+
+--Courses 
+INSERT INTO Course(ID, Cost, MaxPlaces, TimeSlot, Name, InstructorNumber)
+VALUES (90, 1400 , 5, 1 , 'Pilates', 40);
+INSERT INTO Course(ID, Cost, MaxPlaces, TimeSlot, Name, InstructorNumber)
+VALUES (17, 1000 , 20, 2 , 'Spinning', 56);
+INSERT INTO Course(ID, Cost, MaxPlaces, TimeSlot, Name, InstructorNumber)
+VALUES (22, 2000 , 10, 2 , 'Swimming', 28);
+
+--MemberCourse
+INSERT INTO MemberCourse(MembershipNumber,ID, BookingNumber)
+VALUES (879, 90, 1);
+INSERT INTO MemberCourse(MembershipNumber,ID, BookingNumber)
+VALUES (786, 90, 2);
+INSERT INTO MemberCourse(MembershipNumber,ID, BookingNumber)
+VALUES (111, 90, 3);
+INSERT INTO MemberCourse(MembershipNumber,ID, BookingNumber)
+VALUES (222, 90, 4);
+INSERT INTO MemberCourse(MembershipNumber,ID, BookingNumber)
+VALUES (333, 90, 5);
+INSERT INTO MemberCourse(MembershipNumber,ID, BookingNumber)
+VALUES (786, 17, 6);
+INSERT INTO MemberCourse(MembershipNumber,ID, BookingNumber)
+VALUES (111, 17, 7);
+INSERT INTO MemberCourse(MembershipNumber,ID, BookingNumber)
+VALUES (222, 17, 8);
+INSERT INTO MemberCourse(MembershipNumber,ID, BookingNumber)
+VALUES (333, 17, 9);
+INSERT INTO MemberCourse(MembershipNumber,ID, BookingNumber)
+VALUES (333, 22, 10);
+INSERT INTO MemberCourse(MembershipNumber,ID, BookingNumber)
+VALUES (444, 22, 11);
+---------------------------------------------------------------
